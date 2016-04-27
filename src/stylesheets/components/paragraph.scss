@@ -1,0 +1,13 @@
+@import "bourbon";
+
+.animatedParagraph {
+  margin: 100px;
+  max-width: 1000px;
+  @include user-select(none);
+
+  font-family: "candelas plus";
+  font-size: 20px;
+
+  text-align: justify;
+  text-justify: inter-word;
+}
