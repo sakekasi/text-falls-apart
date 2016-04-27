@@ -21,9 +21,9 @@ webpackJsonp([0,1],[
 	  var bookText = document.querySelector('#bookText').textContent;
 	
 	  var markovChain = new _markovChain2.default(bookText);
-	  var paragraph = new _paragraph2.default(initialText);
 	
-	  document.body.appendChild(paragraph.domNode);
+	  // initialText = markovChain.generate(1000);
+	  var paragraph = new _paragraph2.default(document.body, initialText);
 	});
 
 /***/ },
@@ -188,18 +188,63 @@ webpackJsonp([0,1],[
 	
 	var _utils = __webpack_require__(2);
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	__webpack_require__(4);
 	
-	var Paragraph = function Paragraph(text) {
-	  _classCallCheck(this, Paragraph);
+	var LineBrokenParagraph = function LineBrokenParagraph(parentNode, text) {
+	  var _this = this;
+	
+	  _classCallCheck(this, LineBrokenParagraph);
 	
 	  this.text = text;
-	  this.domNode = (0, _utils._)('p', { class: 'animatedParagraph' }, (0, _utils.t)(this.text));
+	
+	  var words = this.text.split(' ').map(function (word) {
+	    return (0, _utils._)('word', {}, (0, _utils.t)(word));
+	  });
+	  var children = [].concat.apply([], words.map(function (wordNode, i, words) {
+	    return i === words.length - 1 ? [wordNode] : [wordNode, (0, _utils.t)(' ')];
+	  }));
+	
+	  this.domNode = _utils._.apply(undefined, ['p', { class: 'animatedParagraph' }].concat(_toConsumableArray(children))); //t(this.text));
+	  this.parentNode = parentNode;
+	
+	  this.parentNode.appendChild(this.domNode);
+	
+	  var lines = [[]];
+	  words.forEach(function (wordNode, i) {
+	    var line = lines.slice(-1)[0];
+	    var previous = words[i - 1];
+	    if (previous && previous.getBoundingClientRect().top !== wordNode.getBoundingClientRect().top) {
+	      console.log("new line at " + wordNode.textContent);
+	      lines.push([]);
+	      line = lines.slice(-1)[0];
+	    }
+	
+	    line.push(wordNode);
+	  });
+	
+	  while (this.domNode.firstChild) {
+	    ;
+	    this.domNode.removeChild(this.domNode.firstChild);
+	  }
+	
+	  lines = lines.map(function (lineNodes) {
+	    var children = [].concat.apply([], lineNodes.map(function (wordNode, i, line) {
+	      return i === line.length - 1 ? [wordNode] : [wordNode, (0, _utils.t)(' ')];
+	    }));
+	    return _utils._.apply(undefined, ['line', {}].concat(_toConsumableArray(children)));
+	  });
+	
+	  lines.forEach(function (line) {
+	    return _this.domNode.appendChild(line);
+	  });
+	  // this.domNode.style.maxWidth = 'none';
 	};
 	
-	exports.default = Paragraph;
+	exports.default = LineBrokenParagraph;
 
 /***/ },
 /* 4 */

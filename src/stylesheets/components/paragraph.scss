@@ -5,9 +5,18 @@
   max-width: 1000px;
   @include user-select(none);
 
-  font-family: "candelas plus";
+  font-family: "goudy bookletter 1911";//"candelas plus";//"linden hill";//
   font-size: 20px;
+  line-height: 1.2;
 
-  text-align: justify;
-  text-justify: inter-word;
+  // text-align: justify;
+  // text-justify: inter-word;
+}
+
+line {
+  display: block;
+  // border: 1px solid white;
+
+  // text-align: justify;
+  // text-justify: inter-word;
 }

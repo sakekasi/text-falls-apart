@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function(){
   let bookText = document.querySelector('#bookText').textContent;
 
   let markovChain = new MarkovChain(bookText);
-  let paragraph = new Paragraph(initialText);
 
-  document.body.appendChild(paragraph.domNode);
+  // initialText = markovChain.generate(1000);
+  let paragraph = new Paragraph(document.body, initialText);
 });
