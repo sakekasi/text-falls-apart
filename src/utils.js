@@ -13,3 +13,8 @@ export function t(text){
 export function choose(array){
   return array[Math.floor(Math.random() * array.length)]
 }
+
+export function chooseSlice(length, array){
+  let i = Math.floor(Math.random() * (array.length - length));
+  return [array.slice(i, i+length), i];
+}

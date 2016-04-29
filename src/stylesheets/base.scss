@@ -3,4 +3,19 @@
 body {
   background-color: hsl(0, 0%, 20%);
   color: hsl(0, 0%, 80%);
+
+  font-family: "goudy bookletter 1911";//"candelas plus";//"linden hill";//
+  padding: 100px;
+}
+
+#title {
+  margin-bottom: 0px;
+}
+
+#author {
+  margin-top: 0px;
+}
+
+h1, h2 {
+  font-weight: normal;
 }

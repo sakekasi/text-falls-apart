@@ -8,7 +8,8 @@ export default class MarkovChain{
 
   _slurp(){
     let words = [].concat.apply([], this.text.split('\n')
-                                                        .map(line=> line.split(' ')));
+                                          .map(line=> line.split(' ')))
+                    .filter(word=> word.trim()!=='');
     let prefix = words.slice(0, this.prefixLength);
     words = words.slice(this.prefixLength);
 
@@ -37,13 +38,13 @@ export default class MarkovChain{
 
   get data(){
     if(!this._data){
-      if(localStorage.getItem('markovChainMap')){
-        this._deserialize();
-      } else {
+      // if(localStorage.getItem('markovChainMap')){
+      //   this._deserialize();
+      // } else {
         this._data = new Map();
         this._slurp();
         this._serialize();
-      }
+      // }
     }
 
     return this._data;
